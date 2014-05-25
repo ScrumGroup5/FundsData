@@ -1,5 +1,4 @@
 package fund.model;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,77 +6,105 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.htmlparser.Node;
+import org.htmlparser.NodeFilter;
+import org.htmlparser.Parser;
+import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
+
+
 public class History {
 	protected BufferedWriter bw;
 	protected BufferedReader br;
-	private URL url;
-	private final String urlStr = "http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code=000001&page=1&per=2997";
-	String fileName = "E:\\data\\aa.txt";
-	private final String date_regex = "\\d+-\\d+-\\d+";
-	private final String jz_regex = "\\d+\\.\\d+<";
-	private final String rate_regex = "-*\\d+.\\d+%|---";
-	protected Pattern date_pat;
-	protected Pattern jz_pat;
-	protected Pattern rate_pat;
-	protected Matcher date_mat;
-	protected Matcher jz_mat;
-	protected Matcher rate_mat;
-
-	public History() {
+	private String urlStr;
+	private String fileName = "";
+	private String fundscode;
+	int num = 0;
+	public History(String fundscode) {
 		try {
-			url = new URL(urlStr);
-			br = new BufferedReader(new InputStreamReader(url.openStream()));
-			bw = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(new File(fileName))));
+			this.fundscode = fundscode;
+			fileName = "E:\\data\\jz\\" + fundscode + "_jz.txt";
+			urlStr = "http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+fundscode+"&page=1&per=2997";
+			bw=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(fileName))));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		loadTh();
+		loadJz();
+	}
+	
+	public void loadJz() {
+		try {
+			URL url = new URL(urlStr);
+			Parser parser = new Parser((HttpURLConnection)url.openConnection());
+			NodeFilter filter = new TagNameFilter("td"); 
+			NodeList nodelist = parser.parse(filter);
+			Node[] nodes = nodelist.toNodeArray();
+			//System.out.println(nodes.length);
+			for (int i = 0; i < nodes.length; i++) {
+				Node node = nodes[i];
+				String s = node.toHtml();
+				int index0 = s.indexOf(">");
+				int index1 = s.indexOf("<");
+				//System.out.println(index1);
+				index1 = s.indexOf("<", index1+1);
+				if(index0+1==index1) bw.write("null ");
+				bw.write(s.substring(index0+1, index1) + " ");
+				if(i%num==num-1) bw.newLine();
+				bw.flush();
+				//System.out.println(s.substring(index0+1, index1));
+			}
+			System.out.println(fundscode + " done!");
+			
+			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		date_pat = Pattern.compile(date_regex);
-		jz_pat = Pattern.compile(jz_regex);
-		rate_pat = Pattern.compile(rate_regex);
-
-		String line;
+	}
+	
+	public void loadTh() {
 		try {
-			while ((line = br.readLine()) != null) {
-				date_mat = date_pat.matcher(line);
-				jz_mat = jz_pat.matcher(line);
-				rate_mat = rate_pat.matcher(line);
-				while (date_mat.find()) {
-					jz_mat.find();
-					rate_mat.find();
-					String out = "";
-					String tmp = date_mat.group();
-					out = out + tmp;
-					String jz01 = jz_mat.group(), jz02 = jz_mat.group();
-					tmp = " " + jz01.substring(0, jz01.length() - 1) + " "
-							+ jz02.substring(0, jz02.length() - 1);
-					out = out + tmp;
-					tmp = " " + rate_mat.group();
-					out = out + tmp;
-					bw.write(out);
-
-					bw.newLine();
-					bw.flush();
-				}
+			URL url = new URL(urlStr);
+			Parser parser = new Parser((HttpURLConnection)url.openConnection());
+			NodeFilter filter = new TagNameFilter("th"); 
+			NodeList nodelist = parser.parse(filter);
+			Node[] nodes = nodelist.toNodeArray();
+			num = nodes.length;
+			for (int i = 0; i < nodes.length; i++) {
+				Node node = nodes[i];
+				String s = node.toHtml();
+				int index0 = s.indexOf(">");
+				int index1 = s.indexOf("</th>");
+				bw.write(s.substring(index0+1, index1) + " ");
+				//System.out.println(s.substring(index0+1, index1));
 			}
+			bw.newLine();
+			bw.flush();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public static void main(String args[]) {
-		new History();
-		System.out.println("done");
-	}
 }

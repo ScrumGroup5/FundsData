@@ -1,6 +1,6 @@
 package fund.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,29 +11,28 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import fund.model.FundsCode;
 import fund.model.History;
 
 public class HistoryTest {
 
 	private History his;
-
+	
 	@Before
 	public void setUp() {
-		his = new History();
+		his = new History("000001");
 	}
-
 	@Test
 	public void test() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(new File(
-					"E:\\data\\aa.txt")));
-			String str0 = "2014-05-16 1.0420 1.0420 -0.29%";
-			String str1 = "2001-12-21 1.4230 1.4230 0.00%";
+			BufferedReader br = new BufferedReader(new FileReader(new File("E:\\data\\jz\\"+"000001"+"_jz.txt")));
+			br.readLine();
+			String str1 = "2002-01-25 1.0050 1.0050 0.50% ·â±ÕÆÚ ·â±ÕÆÚ null  "; 
 			String line0 = br.readLine();
 			String line1 = "", tmp;
-			while ((tmp = br.readLine()) != null)
-				line1 = tmp;
-			assertTrue(line0.equals(str0));
+			while((tmp = br.readLine())!=null) line1 = tmp;
+			System.out.println(line1);
+			System.out.println(str1);
 			assertTrue(line1.equals(str1));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

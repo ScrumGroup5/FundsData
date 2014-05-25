@@ -1,6 +1,6 @@
 package fund.test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,24 +15,21 @@ import fund.model.FundsCode;
 
 public class FundsCodeTest {
 	private FundsCode fc;
-
+	
 	@Before
 	public void setUp() {
 		fc = new FundsCode();
 		fc.loadData();
 	}
-
 	@Test
 	public void test() {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(new File(
-					"E:\\data\\funds_code.txt")));
-			String str0 = "1 000001 ï¿½ï¿½ï¿½Ä³É³ï¿½";
-			String str1 = "2295 770001 ï¿½Â°ï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½";
+			BufferedReader br = new BufferedReader(new FileReader(new File("E:\\data\\funds_code.txt")));
+			String str0 = "1 000001 »ªÏÄ³É³¤";
+			String str1 = "2308 770001 µÂ°îÓÅ»¯ÅäÖÃ";
 			String line0 = br.readLine();
 			String line1 = "", tmp;
-			while ((tmp = br.readLine()) != null)
-				line1 = tmp;
+			while((tmp = br.readLine())!=null) line1 = tmp;
 			assertTrue(line0.equals(str0));
 			assertTrue(line1.equals(str1));
 		} catch (FileNotFoundException e) {
