@@ -2,14 +2,14 @@ package fund.model;
 
 public class Record {
 	private String date;
-	private String unitNet; //ï¿½ï¿½Î»ï¿½ï¿½Öµ
-	private String accumulateNet; //ï¿½Û»ï¿½Öµ
-	private String dailyGrowthRate; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	private String purchaseState; //ï¿½ê¹º×´Ì¬
-	private String redemptionState; //ï¿½ï¿½ï¿½×´Ì¬
-	private String bonus; //ï¿½Öºï¿½
-	private String tenThousandIncome; //Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	private String weekAnnualReturnRate; //7ï¿½ï¿½ï¿½ê»¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String unitNet; //µ¥Î»¾»Öµ
+	private String accumulateNet; //ÀÛ»ý¾»Öµ
+	private String dailyGrowthRate; //ÈÕÔö³¤ÂÊ
+	private String purchaseState; //Éê¹º×´Ì¬
+	private String redemptionState; //Êê»Ø×´Ì¬
+	private String bonus; //·Öºì
+	private String tenThousandIncome; //Ã¿Íò·ÝÊÕÒæ
+	private String weekAnnualReturnRate; //7ÈÕÄê»¯ÊÕÒæÂÊ
 	
 	public Record(String date, String unitNet, String accumulateNet, String dailyGrowthRate, String purchaseState, String redemptionState, String bonus) {
 		this.date = date;

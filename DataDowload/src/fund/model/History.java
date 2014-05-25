@@ -62,7 +62,7 @@ public class History {
 				bw.flush();
 				//System.out.println(s.substring(index0+1, index1));
 			}
-			System.out.println(fundscode + " done!");
+			//System.out.println(fundscode + " done!");
 			
 			
 		} catch (MalformedURLException e) {

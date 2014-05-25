@@ -31,8 +31,6 @@ public class HistoryTest {
 			String line0 = br.readLine();
 			String line1 = "", tmp;
 			while((tmp = br.readLine())!=null) line1 = tmp;
-			System.out.println(line1);
-			System.out.println(str1);
 			assertTrue(line1.equals(str1));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -23,7 +23,7 @@ public class FundsCode {
 	private String urlStr = "http://fund.eastmoney.com/allfund.html";
 	String fileName = "E:\\data\\funds_code.txt";
 	String inputname = "E:\\data\\code.txt";
-	private String regex = "ï¿½ï¿½\\d+ï¿½ï¿½\\S*<";
+	private String regex = "£¨\\d+£©\\S*<";
 	protected Pattern pat;
 	protected Matcher mat;
 	public FundsCode() {
