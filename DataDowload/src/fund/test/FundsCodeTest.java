@@ -30,10 +30,6 @@ public class FundsCodeTest {
 			String line0 = br.readLine();
 			String line1 = "", tmp;
 			while((tmp = br.readLine())!=null) line1 = tmp;
-			System.out.print(line0);
-			System.out.print(str0);
-			System.out.print(line1);
-			System.out.print(str1);
 			assertTrue(line0.equals(str0));
 			assertTrue(line1.equals(str1));
 		} catch (FileNotFoundException e) {

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Fund {
-	private int num; //record的项目个数【6或7】
+	private int datatype; //record的项目个数【6或7】!!!!!!!!!!!!!!!!详见0000001_jz和000013_jz
 	private String name; //全称
 	private String briefName; //简称
 	private String code; //代码
@@ -70,12 +70,12 @@ public class Fund {
 			String line;
 			line = br_record.readLine();
 			String[] ss = line.split(" +");
-			num = ss.length;
+			datatype = ss.length;
 			while((line=br_record.readLine())!=null) {
-				if(num==6) {
+				if(datatype==6) {
 					recordArray.add(new Record(ss[0], ss[1], ss[2], ss[3], ss[4], ss[5]));
 				}
-				else if(num==7) {
+				else if(datatype==7) {
 					Record a = new Record(ss[0], ss[1], ss[2], ss[3], ss[4], ss[5], ss[6]);
 					recordArray.add(a);
 				}
@@ -171,6 +171,12 @@ public class Fund {
 	public void setRecordArray(ArrayList<Record> recordArray) {
 		this.recordArray = recordArray;
 	}
-	
-	
+
+	public int getDatatype() {
+		return datatype;
+	}
+
+	public void setDatatype(int datatype) {
+		this.datatype = datatype;
+	}
 }
