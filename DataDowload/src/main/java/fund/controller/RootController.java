@@ -34,7 +34,7 @@ public class RootController {
 	@FXML
 	private void initialize() {
 		mainContainer = new ScreensContainer();
-		mainContainer.loadScreen(RootController.ID_INFORMATION,
+		mainContainer.registerScreen(RootController.ID_INFORMATION,
 				RootController.file_info);
 		mainContainer.setScreen(ID_INFORMATION);
 		rootLayout.setCenter(mainContainer);

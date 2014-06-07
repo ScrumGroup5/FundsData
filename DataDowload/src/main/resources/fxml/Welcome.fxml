@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane fx:id="rootLayout" alignment="TOP_CENTER" disable="false" focusTraversable="false" gridLinesVisible="false" mouseTransparent="false" opacity="1.0" pickOnBounds="true" prefHeight="600.0" prefWidth="800.0" styleClass="layout" visible="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fund.controller.WelcomeController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Label styleClass="h2" text="欢迎使用" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+    <Label styleClass="h3" text="基金分析工具" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+    <Button fx:id="goButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="165.0" styleClass="wia-button" text="立刻体验" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+  </children>
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" percentHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" percentHeight="35.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+  <stylesheets>
+    <URL value="@../css/general.css" />
+  </stylesheets>
+</GridPane>

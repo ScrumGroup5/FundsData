@@ -13,25 +13,24 @@ import org.junit.Test;
 
 public class HistoryTest {
 
-	private History his;
-
 	@Before
 	public void setUp() {
-		his = new History("000001");
+		new HistoryCrawler("000001").crawl();
 	}
 
 	@Test
 	public void test() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(new File(
-					"E:\\data\\jz\\" + "000001" + "_jz.txt")));
+					DataUtil.getRecordFilePath("000001"))));
 			br.readLine();
 			String str1 = "2002-01-25 1.0050 1.0050 0.50% 封闭期 封闭期 null  ";
-			String line0 = br.readLine();
 			String line1 = "", tmp;
+			br.readLine();
 			while ((tmp = br.readLine()) != null)
 				line1 = tmp;
 			assertTrue(line1.equals(str1));
+			br.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

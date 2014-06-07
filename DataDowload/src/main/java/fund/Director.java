@@ -5,8 +5,8 @@ package fund;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -18,6 +18,8 @@ public class Director extends Application {
 	private Stage primaryStage;
 	public static final String ID_BASE = "rootlayout";
 	public static final String file_base = "/fxml/base.fxml";
+	public static final String ID_WELCOME = "welcome";
+	public static final String file_welcome = "/fxml/Welcome.fxml";
 
 	/**
 	 * 
@@ -38,8 +40,8 @@ public class Director extends Application {
 		this.primaryStage.setTitle("Agile Fund");
 
 		FXMLLoader loader = new FXMLLoader(
-				Director.class.getResource(file_base));
-		BorderPane rootLayout = (BorderPane) loader.load();
+				Director.class.getResource(file_welcome));
+		Parent rootLayout = loader.load();
 
 		// Group root = new Group();
 		// root.getChildren().addAll(mainContainer);

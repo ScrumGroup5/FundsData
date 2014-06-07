@@ -41,134 +41,180 @@
 package fund.view;
 
 import java.util.HashMap;
-import java.util.logging.Logger;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fund.controller.AbstractFXController;
 
 /**
  * 
- * @author Angie
+ * @author Angie and Saint Scott
  */
 public class ScreensContainer extends StackPane {
 	// Holds the screens to be displayed
 
-	private static Logger logger = Logger.getLogger(ScreensContainer.class
-			.getName());
+	private final static Logger logger = LoggerFactory
+			.getLogger(ScreensContainer.class);
 
-	private final HashMap<String, AbstractFXController> controllers = new HashMap<String, AbstractFXController>();
+	private final HashMap<String, AbstractFXController> controllers = new HashMap<>();
+	private final HashMap<String, String> screenMap = new HashMap<>();
+	private final HashMap<String, Parent> screens = new HashMap<>();
+
+	private String currentScreen = null;
 
 	public ScreensContainer() {
 		super();
 	}
 
-	// Add the screen to the collection
-	public void addController(String name, AbstractFXController screen) {
+	/**
+	 * register the screen name and its resource into the container
+	 * 
+	 * @param name
+	 *            screen'name
+	 * @param resource
+	 *            screen's fxml file path
+	 */
+	public void registerScreen(String name, String resource) {
+		screenMap.put(name, resource);
+	}
+
+	private String getResource(String name) {
+		return screenMap.get(name);
+	}
+
+	/**
+	 * Add the Controller to the collection
+	 * 
+	 * @param name
+	 * @param screen
+	 */
+	private void addController(String name, AbstractFXController screen) {
 		controllers.put(name, screen);
 	}
 
-	// Returns the Node with the appropriate name
+	/**
+	 * Returns the Controller binded with the appropriate name
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public AbstractFXController getController(String name) {
 		return controllers.get(name);
 	}
 
-	public Parent getScreen(String name) {
-		return controllers.get(name).getLayout();
+	/**
+	 * @param name
+	 * @param screen
+	 */
+	private void addScreen(String name, Parent screen) {
+		screens.put(name, screen);
 	}
 
-	// Loads the fxml file, add the screen to the screens collection and
-	// finally injects the screenPane to the controller.
-	public void loadScreen(String name, String resource) {
+	/**
+	 * @param name
+	 * @return
+	 */
+	private Parent getScreen(String name) {
+		return screens.get(name);
+	}
+
+	/**
+	 * Loads the fxml file, add the screen to the screens collection and finally
+	 * injects the screenPane to the controller.
+	 * 
+	 * @param name
+	 */
+	private void loadScreen(String name) {
 		try {
-			// logger.info(ClassLoader.getSystemResource(resource).toString());
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
-			loader.load();
-			AbstractFXController myScreenController = loader.getController();
-			addController(name, myScreenController);
-			myScreenController.setScreenContainer(this);
-			myScreenController.init();
+			logger.info("load the {}'s fxml file and init its controller", name);
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					screenMap.get(name)));
+			addScreen(name, loader.load());
+			AbstractFXController myScreenControler = loader.getController();
+			addController(name, myScreenControler);
+			myScreenControler.setScreenContainer(this);
+			myScreenControler.init();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	// This method tries to displayed the screen with a predefined name.
-	// First it makes sure the screen has been already loaded. Then if there is
-	// more than
-	// one screen the new screen is been added second, and then the current
-	// screen is removed.
-	// If there isn't any screen being displayed, the new screen is just added
-	// to the root.
+	/**
+	 * This method tries to displayed the screen with a predefined name. First
+	 * it makes sure the screen has been already loaded. Then if there is more
+	 * than one screen the new screen is been added second, and then the current
+	 * screen is removed. If there isn't any screen being displayed, the new
+	 * screen is just added to the root.
+	 * 
+	 * @param name
+	 * @return if set screen succeed
+	 */
 	public boolean setScreen(final String name) {
-		if (getScreen(name) != null) { // screen loaded
-			final DoubleProperty opacity = opacityProperty();
+		if (name == currentScreen) {
+			return true;
+		}
+		if (getResource(name) != null) { // screen loaded
+			loadScreen(name);
+			currentScreen = name;
 
 			if (!getChildren().isEmpty()) { // if there is more than one screen
-				Timeline fade = new Timeline(new KeyFrame(Duration.ZERO,
-						new KeyValue(opacity, 1.0)), new KeyFrame(new Duration(
-						500), new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent t) {
-						getChildren().clear(); // remove the displayed screen
-						getChildren().addAll(getScreen(name)); // add the screen
+				FadeTransition fadeOut = new FadeTransition(new Duration(1000),
+						this);
+				fadeOut.setFromValue(1.0);
+				fadeOut.setToValue(0.0);
+				fadeOut.setOnFinished(new EventHandler<ActionEvent>() {
 
-						Timeline fadeIn = new Timeline(new KeyFrame(
-								Duration.ZERO, new KeyValue(opacity, 0.0)),
-								new KeyFrame(new Duration(400), new KeyValue(
-										opacity, 1.0)));
+					@Override
+					public void handle(ActionEvent event) {
+						// TODO Auto-generated method stub
+						getChildren().clear(); // remove the displayed screen
+						getChildren().add(getScreen(name)); // add the screen
+						FadeTransition fadeIn = new FadeTransition(
+								new Duration(800), ScreensContainer.this);
+						fadeIn.setFromValue(0.0);
+						fadeIn.setToValue(1.0);
 						fadeIn.play();
-						getController(name).update();
 					}
-				}, new KeyValue(opacity, 0.0)));
-				fade.play();
+				});
+				fadeOut.play();
 
 			} else {
 				setOpacity(0.0);
-				getChildren().addAll(getScreen(name)); // no one
-														// else
-														// been
-				// displayed, then just
-				// show
-				Timeline fadeIn = new Timeline(new KeyFrame(Duration.ZERO,
-						new KeyValue(opacity, 0.0)), new KeyFrame(new Duration(
-						1000), new KeyValue(opacity, 1.0)));
+				getChildren().add(getScreen(name)); // no one else been
+													// displayed, then just show
+				FadeTransition fadeIn = new FadeTransition(new Duration(1000),
+						this);
+				fadeIn.setFromValue(0.0);
+				fadeIn.setToValue(1.0);
 				fadeIn.play();
-				getController(name).update();
 			}
 			return true;
 		} else {
-			logger.severe("screen " + name + " hasn't been loaded!!! \n");
+			logger.error("screen's address {} hasn't been registered!!!", name);
 			return false;
 		}
-
-		/*
-		 * Node screenToRemove; if(screens.get(name) != null){ //screen loaded
-		 * if(!getChildren().isEmpty()){ //if there is more than one screen
-		 * getChildren().add(0, screens.get(name)); //add the screen
-		 * screenToRemove = getChildren().get(1); getChildren().remove(1);
-		 * //remove the displayed screen }else{
-		 * getChildren().add(screens.get(name)); //no one else been displayed,
-		 * then just show } return true; }else {
-		 * System.out.println("screen hasn't been loaded!!! \n"); return false;
-		 * }
-		 */
 	}
 
-	// This method will remove the screen with the given name from the
-	// collection of screens
+	/**
+	 * This method will remove the screen with the given name from the
+	 * collection of screens
+	 * 
+	 * @param name
+	 * @return if unload screen succeed
+	 */
 	public boolean unloadScreen(String name) {
 		if (controllers.remove(name) == null) {
-			logger.warning("Screen didn't exist");
+			logger.warn("Screen {} didn't exist", name);
 			return false;
 		} else {
 			return true;

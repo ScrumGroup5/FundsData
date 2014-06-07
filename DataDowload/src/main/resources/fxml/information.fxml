@@ -7,10 +7,10 @@
 
 <BorderPane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fund.controller.InfoController">
    <left>
-      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="fundsTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="75.0" text="基金代码" />
-          <TableColumn prefWidth="124.0" text="基金简称" />
+          <TableColumn fx:id="codeColumn" prefWidth="75.0" text="基金代码" />
+          <TableColumn fx:id="nameColumn" prefWidth="124.0" text="基金简称" />
         </columns>
       </TableView>
    </left>
@@ -84,7 +84,23 @@
                </GridPane.margin>
             </Label>
             <Label text="跟踪标的" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-            <Button mnemonicParsing="false" text="查看历史净值" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+            <Button fx:id="checkHistory" mnemonicParsing="false" text="查看历史净值" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+            <Label fx:id="fullNameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="codeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="publishDateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="propertySizeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="organizationLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="managerLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="manageFeeRateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="workStandardLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label fx:id="briefNameLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="typeLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label fx:id="establishLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="portionSizeLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label fx:id="trusteeLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <Label fx:id="shareProfitLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Label fx:id="trusteeFeeRateLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+            <Label fx:id="trackSubjectLabel" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="8" />
          </children>
       </GridPane>
    </center>

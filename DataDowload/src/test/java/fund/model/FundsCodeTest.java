@@ -12,27 +12,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class FundsCodeTest {
-	private FundsCode fc;
 
 	@Before
 	public void setUp() {
-		fc = new FundsCode();
-		fc.loadData();
+		FundsCodeCrawler.crawl();
 	}
 
 	@Test
 	public void test() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(new File(
-					"E:\\data\\funds_code.txt")));
-			String str0 = "1 000001 华夏成长";
-			String str1 = "2308 770001 德邦优化配置";
+					DataUtil.getFundCodeFilePath())));
+			String str0 = "000001 华夏成长";
+			String str1 = "770001 德邦优化配置";
 			String line0 = br.readLine();
 			String line1 = "", tmp;
 			while ((tmp = br.readLine()) != null)
 				line1 = tmp;
 			assertTrue(line0.equals(str0));
 			assertTrue(line1.equals(str1));
+			br.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

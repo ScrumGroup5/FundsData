@@ -3,7 +3,6 @@
  */
 package fund.controller;
 
-import javafx.scene.Parent;
 import fund.view.ScreensContainer;
 
 /**
@@ -25,14 +24,5 @@ public abstract class AbstractFXController {
 	public void setScreenContainer(ScreensContainer screensContainer) {
 		myScreensContainer = screensContainer;
 	};
-
-	/**
-	 * @return
-	 */
-	public abstract Parent getLayout();
-
-	public void update() {
-
-	}
 
 }
