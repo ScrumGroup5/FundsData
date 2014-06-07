@@ -28,7 +28,7 @@ public class ProfileCrawlTask implements Callable<Void> {
 				code = codeQueue.poll();
 			}
 			if (!new File(DataUtil.getProfileFilePath(code)).exists()) {
-				new ProfileCrawler(codeQueue.poll()).crawl();
+				new ProfileCrawler(code).crawl();
 			}
 		}
 		return null;
