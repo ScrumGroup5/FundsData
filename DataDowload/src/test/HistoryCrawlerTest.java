@@ -11,7 +11,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HistoryTest {
+public class HistoryCrawlerTest {
 
 	@Before
 	public void setUp() {
@@ -19,12 +19,34 @@ public class HistoryTest {
 	}
 
 	@Test
-	public void test() {
+	public void loadJzTest() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(new File(
 					DataUtil.getRecordFilePath("000001"))));
 			br.readLine();
-			String str1 = "2002-01-25 1.0050 1.0050 0.50% 封闭期 封闭期 null  ";
+			String str1 = "2002-03-04 1.0130 1.0130 0.20% 开放申购 开放赎回 null  ";
+			String line1 = "", tmp;
+			br.readLine();
+			while ((tmp = br.readLine()) != null)
+				line1 = tmp;
+			assertTrue(line1.equals(str1));
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void loadThTest() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(new File(
+					DataUtil.getRecordFilePath("000001"))));
+			br.readLine();
+			String str1 = "2002-03-04 1.0130 1.0130 0.20% 开放申购 开放赎回 null  ";
 			String line1 = "", tmp;
 			br.readLine();
 			while ((tmp = br.readLine()) != null)

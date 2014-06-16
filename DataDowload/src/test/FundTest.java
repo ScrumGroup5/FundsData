@@ -19,7 +19,7 @@ public class FundTest {
 	}
 
 	@Test
-	public void test() {
+	public void fundGetterTest() {
 		assertTrue(fund.getName().equals("华夏成长证券投资基金"));
 		assertTrue(fund.getType().equals("混合型"));
 		array = fund.getRecordList();

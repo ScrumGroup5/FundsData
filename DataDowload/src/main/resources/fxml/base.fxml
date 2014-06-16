@@ -5,13 +5,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fund.controller.RootController">
+<BorderPane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" stylesheets="@../css/JMetroLightTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fund.controller.RootController">
    <top>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="800.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="infoButton" mnemonicParsing="false" onAction="#handleInfo" text="基本信息" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" text="基金筛选" />
+            <Button mnemonicParsing="false" text="模拟投资" />
          </children>
       </HBox>
    </top>

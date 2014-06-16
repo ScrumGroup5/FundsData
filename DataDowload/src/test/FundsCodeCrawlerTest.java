@@ -11,7 +11,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FundsCodeTest {
+public class FundsCodeCrawlerTest {
 
 	@Before
 	public void setUp() {
@@ -19,7 +19,7 @@ public class FundsCodeTest {
 	}
 
 	@Test
-	public void test() {
+	public void saveDataTest() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(new File(
 					DataUtil.getFundCodeFilePath())));
