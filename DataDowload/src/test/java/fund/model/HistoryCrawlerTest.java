@@ -24,7 +24,7 @@ public class HistoryCrawlerTest {
 			BufferedReader br = new BufferedReader(new FileReader(new File(
 					DataUtil.getRecordFilePath("000001"))));
 			br.readLine();
-			String str1 = "2002-03-04 1.0130 1.0130 0.20% 开放申购 开放赎回 null  ";
+			String str1 = "2002-03-14 1.0340 1.0340 0.88% 开放申购 开放赎回 null  ";
 			String line1 = "", tmp;
 			br.readLine();
 			while ((tmp = br.readLine()) != null)
